@@ -1,0 +1,81 @@
+CREATE TABLE `categories`(
+`id` INT PRIMARY KEY AUTO_INCREMENT,
+`category` VARCHAR(20),
+`daily_rate` DOUBLE,
+`weekly_rate` DOUBLE,
+`montly_rate` DOUBLE,
+`weekend_rate` DOUBLE
+);
+
+INSERT INTO `categories` (`category`, `daily_rate`)
+VALUES ('TEST1', 5.7),
+('TEST2', 6.0),
+('TEST3', 4.2);
+
+CREATE TABLE `cars`(
+`id` INT PRIMARY KEY AUTO_INCREMENT,
+`plate_number` VARCHAR(20),
+`make` VARCHAR(20),
+`model` VARCHAR(50),
+`car_year` YEAR,
+`category_id` INT,
+`doors` INT ,
+`picture` BLOB,
+`car_condition` VARCHAR(30),
+`available` BOOLEAN
+);
+
+INSERT INTO `cars`(`model`,`doors`)
+VALUES ('BMW', 4),
+('AUDI', 2),
+('G-CLASS', 5);
+
+CREATE TABLE `employees`(
+`id` INT PRIMARY KEY AUTO_INCREMENT,
+`first_name` VARCHAR(30),
+`last_name` VARCHAR(30),
+`title` VARCHAR(50),
+`notes` TEXT
+);
+
+INSERT INTO `employees` (`first_name`,`title`)
+VALUES ('tedo','m'),
+('misho','m'),
+('geri','f');
+
+CREATE TABLE `customers`(
+`id` INT PRIMARY KEY AUTO_INCREMENT,
+`driver_license_number` VARCHAR(20),
+`full_name` VARCHAR(40),
+`address` VARCHAR(50),
+`city` VARCHAR(20),
+`zip_code` VARCHAR(50),
+`notes` TEXT
+);
+
+INSERT INTO `customers` (`full_name`,`city`)
+VALUES('teodor zaprqnov','Plovdiv'),
+('mariq dragneva','Plovdiv'),
+('ivan ivanov','Sofia');
+
+CREATE TABLE `rental_orders`(
+`id` INT PRIMARY KEY AUTO_INCREMENT,
+`employee_id` INT,
+`customer_id` INT,
+`car_id` INT,
+`car_condition` VARCHAR(30),
+`tank_level` VARCHAR(20),
+`kilometrage_start` DOUBLE,
+`kilometrage_end` DOUBLE,
+`total_kilometrage` DOUBLE,
+`start_date` DATE,
+`end_date` DATE,
+`total_days` INT,
+`rate_applied` DOUBLE,
+`tax_rate` DOUBLE ,
+`order_status` VARCHAR(20),
+`notes` TEXT
+);
+
+INSERT INTO `rental_orders` (`car_id`)
+VALUES (126523),(12341),(62562);

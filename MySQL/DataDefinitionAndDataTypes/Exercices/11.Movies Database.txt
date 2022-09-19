@@ -1,0 +1,58 @@
+CREATE TABLE `directors`(
+`id` INT PRIMARY KEY AUTO_INCREMENT,
+`director_name` VARCHAR(50) NOT NULL,
+`notes` VARCHAR(500)
+);
+
+INSERT INTO `directors`(`director_name`,`notes`)
+VALUES ('Teo','Hello'),
+('Joro','Hi'),
+('Mimi','YOho'),
+('Pesho','Hay'),
+('Stef','Lazap');
+
+CREATE TABLE `genres`(
+`id` INT PRIMARY KEY AUTO_INCREMENT,
+`genre_name` VARCHAR(50) NOT NULL,
+`notes` VARCHAR(500)
+);
+
+INSERT INTO `genres`(`genre_name`,`notes`)
+VALUES ('Criminal','Aggata Christie'),
+('Biography','Stiv Jobs'),
+('Romantic','50 fifty shades'),
+('Classic','Sherlock Holms'),
+('Sports','Chelsea');
+
+
+CREATE TABLE `categories`(
+`id` INT PRIMARY KEY AUTO_INCREMENT,
+`category_name` VARCHAR(50) NOT NULL,
+`notes` VARCHAR(500)
+);
+
+INSERT INTO `categories`(`category_name`,`notes`)
+VALUES ('test1','1'),
+('test2','2'),
+('test3','3'),
+('test4','4'),
+('test5','5');
+
+CREATE TABLE `movies`(
+`id` INT PRIMARY KEY AUTO_INCREMENT,
+`title` VARCHAR(255) NOT NULL,
+`director_id` INT,
+`copyright_year` DATE,
+`length` DOUBLE,
+`genre_id` INT,
+`category_id` INT,
+`rating` DOUBLE,
+`notes` TEXT 
+);
+
+INSERT INTO `movies`(`director_id`,`rating`,`title`)
+VALUES ('123','5.50','t1'),
+('124','5.60','t2'),
+('125','4.30','t3'),
+('126','2.20','t4'),
+('127','6.00','t5');
