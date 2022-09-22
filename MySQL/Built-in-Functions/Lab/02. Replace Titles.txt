@@ -1,0 +1,5 @@
+SELECT REPLACE (`title`, 'The', '***') AS `title`
+
+FROM `books`
+
+ORDER BY `id`;
