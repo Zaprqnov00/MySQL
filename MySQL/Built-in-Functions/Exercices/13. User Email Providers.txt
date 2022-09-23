@@ -1,0 +1,2 @@
+SELECT `user_name`, substring(`email`, locate('@', email) + 1) AS `email provider` FROM `users`
+ORDER BY `email provider`, `user_name`;
