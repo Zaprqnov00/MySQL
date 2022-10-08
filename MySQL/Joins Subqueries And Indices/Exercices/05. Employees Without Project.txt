@@ -1,0 +1,5 @@
+SELECT `employee_id`, `first_name`
+FROM `employees`
+WHERE `manager_id` IS NULL
+ORDER BY `employee_id` DESC
+LIMIT 3;
