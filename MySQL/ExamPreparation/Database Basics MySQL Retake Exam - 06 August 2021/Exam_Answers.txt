@@ -1,0 +1,109 @@
+# 1.
+
+CREATE TABLE `addresses`(
+`id` INT PRIMARY KEY AUTO_INCREMENT,
+`name` VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE `categories`(
+`id` INT PRIMARY KEY AUTO_INCREMENT,
+`name` VARCHAR(10) NOT NULL
+);
+
+CREATE TABLE `offices`(
+`id` INT PRIMARY KEY AUTO_INCREMENT,
+`workspace_capacity` INT NOT NULL,
+`website` VARCHAR(50),
+`address_id` INT NOT NULL,
+CONSTRAINT fk_addressid_addresses
+FOREIGN KEY (`address_id`)
+REFERENCES `addresses` (`id`)
+);
+
+CREATE TABLE `employees`(
+`id` INT PRIMARY KEY AUTO_INCREMENT,
+`first_name` VARCHAR(30) NOT NULL,
+`last_name` VARCHAR(30) NOT NULL,
+`age` INT NOT NULL,
+`salary` DECIMAL(10, 2) NOT NULL,
+`job_title` VARCHAR(20) NOT NULL,
+`happiness_level` CHAR(1) NOT NULL
+);
+
+CREATE TABLE `teams`(
+`id` INT PRIMARY KEY AUTO_INCREMENT,
+`name` VARCHAR(40) NOT NULL,
+`office_id` INT NOT NULL,
+`leader_id` INT NOT NULL UNIQUE,
+CONSTRAINT fk_officeid_offices
+FOREIGN KEY (`office_id`)
+REFERENCES `offices` (`id`),
+CONSTRAINT fk_leaderid_employees
+FOREIGN KEY (`leader_id`)
+REFERENCES `employees` (`id`)
+);
+
+CREATE TABLE `games`(
+`id` INT PRIMARY KEY AUTO_INCREMENT,
+`name` VARCHAR(50) NOT NULL UNIQUE,
+`description` TEXT,
+`rating` FLOAT NOT NULL DEFAULT(5.5),
+`budget` DECIMAL(10, 2) NOT NULL,
+`release_date` DATE,
+`team_id` INT NOT NULL,
+CONSTRAINT fk_teamid_teams
+FOREIGN KEY (`team_id`)
+REFERENCES `teams` (`id`)
+);
+
+CREATE TABLE `games_categories`(
+`game_id` INT NOT NULL,
+`category_id` INT NOT NULL,
+PRIMARY KEY pk_gameid_categoryid (`game_id`, `category_id`),
+CONSTRAINT fk_gameid_games
+FOREIGN KEY (`game_id`)
+REFERENCES `games` (`id`),
+CONSTRAINT fk_categoryid_categories
+FOREIGN KEY (`category_id`)
+REFERENCES `categories` (`id`)
+);
+
+
+# 2.
+
+INSERT INTO `games` (`name`, `rating`, `budget`, `team_id`)
+SELECT 
+REVERSE(LOWER(RIGHT(`name`,char_length(`name`) - 1))), (id), (leader_id * 1000), (id)
+FROM `teams`
+WHERE id BETWEEN 1 AND 9;
+
+
+# 3.
+
+UPDATE `employees` AS e
+SET e.`salary` = e.`salary` + 1000
+WHERE e.`age` <= 40 AND e.`salary` < 5000;
+
+
+# 4.
+
+DELETE g
+FROM `games` AS g
+LEFT JOIN `games_categories` AS gc ON g.id = gc.game_id
+WHERE gc.category_id IS NULL AND g.release_date IS NULL;
+
+
+# 5.
+
+SELECT `first_name`, `last_name`, `age`, `salary`, `happiness_level`
+FROM `employees`
+ORDER BY `salary`, `id`;
+
+# 6.
+
+SELECT t.`name`, a.`name`, CHAR_LENGTH(a.`name`)
+FROM `teams` AS t
+LEFT JOIN `offices` AS o ON t.`office_id` = o.`id`
+JOIN `addresses` AS a ON o.`address_id` = a.`id`
+WHERE o.`website` IS NOT NULL 
+ORDER BY t.`name`, a.`name`;
